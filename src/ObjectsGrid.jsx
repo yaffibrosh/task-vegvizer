@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Container, Col, Row } from 'react-bootstrap';
+import styled from 'styled-components'
 
 
 
@@ -24,34 +24,55 @@ export default function ObjectsGrid() {
             row: 1,
             col: 0
         },
+        null,
+        null,
+        null,
+        null,
         {
             color: "orange",
             row: 3,
             col: 1
         }
     ];
-    let cols = [0,1];
-    let rows = [0,1,2,3];
+    const Location = styled.div`
+    grid-column-start: ${props => props.itemColStart || null};
+    grid-column-end:  ${props => props.itemColEnd || null};
+    grid-column-start: ${props => props.itemRowStart || null};
+    grid-column-end:  ${props => props.itemRowEnd || null};
+    padding:  20px;
+    align-items:center;
+    justify-content:center;
+    align-items:center;
+    display:flex;
+  `
+
+const Item = styled.div`
+  background-color: ${props => props.itemColor || "white"};
+  width: 100px;
+  height: 50px;
+`
 
     return (
-        
-            <Container style = {{marginTop:"100px"}}>
-                {rows.map((row) => {
-                    return <Row className = "row">
-                        {cols.map((col) => {
-                            return <Col className = "col">
-                                {objects.map((element) => {
-                                    if(element.row===row && element.col===col)
-                                        return <div class = "d-flex justify-content-center align-items-center" className = "object"    
-                                            style={{ width: "100px", height: "50px", backgroundColor: element.color }}>
-                                        
-                                        </div>
-                                })}
-                            </Col>
-                        })}
-                    </Row>
-                })}
-            </Container>
+        <>
 
+            <div class="grid-container">
+                {objects.map((element) => {
+                    if (element) {
+                        return <div class="grid-item"><Location
+                            itemColStart={element.col}
+                            itemColEnd={element.col + 1}
+                            itemRowStart={element.row}
+                            itemRowEnd={element.row + 1}
+                        >
+                            <Item itemColor={element.color}></Item>
+                        </Location>
+                        </div>
+                    }
+                    return <div class="grid-item"></div>
+                })
+                }
+
+            </div>
+</>
     );
 };
