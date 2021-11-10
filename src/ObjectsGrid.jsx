@@ -12,12 +12,12 @@ export default function ObjectsGrid() {
         {
             color: "red",
             row: 0,
-            col: 0
+            col: 1
         },
         {
             color: "blue",
             row: 0,
-            col: 1
+            col: 0
         },
         {
             color: "green",
@@ -35,18 +35,17 @@ export default function ObjectsGrid() {
         }
     ];
     const Location = styled.div`
-    grid-column-start: ${props => props.itemColStart || null};
-    grid-column-end:  ${props => props.itemColEnd || null};
-    grid-column-start: ${props => props.itemRowStart || null};
-    grid-column-end:  ${props => props.itemRowEnd || null};
+    text-align: center;
     padding:  20px;
-    align-items:center;
     justify-content:center;
     align-items:center;
     display:flex;
+    grid-area: ${props => props.row+1}/${props =>props.col+1}/${props =>props.row+1}/${props =>props.col+2} ;
+
   `
 
-const Item = styled.div`
+    
+  const Item = styled.div`
   background-color: ${props => props.itemColor || "white"};
   width: 100px;
   height: 50px;
@@ -58,19 +57,15 @@ const Item = styled.div`
             <div class="grid-container">
                 {objects.map((element) => {
                     if (element) {
-                        return <div class="grid-item"><Location
-                            itemColStart={element.col}
-                            itemColEnd={element.col + 1}
-                            itemRowStart={element.row}
-                            itemRowEnd={element.row + 1}
-                        >
+                        return <Location  row={element.row} col={element.col}>
                             <Item itemColor={element.color}></Item>
-                        </Location>
-                        </div>
+                            </Location>
+                    
                     }
                     return <div class="grid-item"></div>
                 })
                 }
+                
 
             </div>
 </>
